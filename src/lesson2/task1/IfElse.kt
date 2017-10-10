@@ -37,10 +37,9 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String =
         when {
-            (((age % 100) in 10..20) || ((age % 10) in 5..9)) || (age%10 == 0) -> ("$age лет")
-            ((age % 10) == 1) -> ("$age год")
-            ((age % 10) in 2..4) -> ("$age года")
-            else -> ("неверный ввод")
+            age % 100 in 10..20 || age % 10 in 5..9 || age % 10 == 0 -> "$age лет"
+            age % 10 in 2..4 -> "$age года"
+            else -> "$age год"
         }
 
 /**
@@ -56,11 +55,11 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s1 = v1 * t1
     val s2 = v2 * t2
     val s3 = v3 * t3
-    val half_s = (s1 + s2 + s3) / 2
+    val halfS = (s1 + s2 + s3) / 2
     return when {
-        (half_s <= s1) -> (half_s / v1)
-        ((half_s > s1) && (half_s <= s1 + s2)) -> (t1 + (half_s - s1) / v2)
-        else -> (t1 + t2 + (half_s - s1 - s2) / v3)
+        (halfS <= s1) -> (halfS / v1)
+        halfS > s1 && halfS <= (s1 + s2) -> t1 + (halfS - s1) / v2
+        else -> t1 + t2 + (halfS - s1 - s2) / v3
     }
 }
 
@@ -84,7 +83,6 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
         (rook1 && rook2) -> 3
         rook1 -> 1
         rook2 -> 2
-
         else -> 0
     }
 }
