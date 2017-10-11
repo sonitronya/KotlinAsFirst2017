@@ -57,7 +57,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s3 = v3 * t3
     val halfS = (s1 + s2 + s3) / 2
     return when {
-        (halfS <= s1) -> (halfS / v1)
+        halfS <= s1 -> halfS / v1
         halfS > s1 && halfS <= (s1 + s2) -> t1 + (halfS - s1) / v2
         else -> t1 + t2 + (halfS - s1 - s2) / v3
     }
@@ -130,9 +130,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
         when {
-            (a <= c) && (c <= b) && (b <= d) -> (b - c)
-            (c <= a) && (a <= d) && (d <= b) -> (d - a)
-            (a <= c) && (c <= d) && (d <= b) -> (d - c)
-            (c <= a) && (a <= b) && (b <= d) -> (b - a)
+            (a <= c) && (c <= b) && (b <= d) -> (b - c) //AB пересекает CD
+            (c <= a) && (a <= d) && (d <= b) -> (d - a) //CD пересекает AB
+            (a <= c) && (c <= d) && (d <= b) -> (d - c) //CD входит в AB
+            (c <= a) && (a <= b) && (b <= d) -> (b - a) //AB входит в CD
             else -> -1
         }
