@@ -58,7 +58,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val halfS = (s1 + s2 + s3) / 2
     return when {
         halfS <= s1 -> halfS / v1
-        halfS > s1 && halfS <= (s1 + s2) -> t1 + (halfS - s1) / v2
+        halfS in s1 .. s1 + s2 -> t1 + (halfS - s1) / v2
         else -> t1 + t2 + (halfS - s1 - s2) / v3
     }
 }
@@ -76,11 +76,11 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    val rook1 = ((kingX == rookX1) || (kingY == rookY1))
-    val rook2 = ((kingX == rookX2) || (kingY == rookY2))
+    val rook1 = kingX == rookX1 || kingY == rookY1
+    val rook2 = kingX == rookX2 || kingY == rookY2
 
     return when {
-        (rook1 && rook2) -> 3
+        rook1 && rook2 -> 3
         rook1 -> 1
         rook2 -> 2
         else -> 0
@@ -100,10 +100,10 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val rook = (kingX == rookX) || (kingY == rookY)
-    val bishop = ((abs(kingX - bishopX) == (abs(kingY - bishopY))))
+    val rook = kingX == rookX || kingY == rookY
+    val bishop = abs(kingX - bishopX) == abs(kingY - bishopY)
     return when {
-        (bishop && rook) -> 3
+        bishop && rook -> 3
         bishop -> 2
         rook -> 1
         else -> 0
@@ -130,9 +130,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
         when {
-            (a <= c) && (c <= b) && (b <= d) -> (b - c) //AB пересекает CD
-            (c <= a) && (a <= d) && (d <= b) -> (d - a) //CD пересекает AB
-            (a <= c) && (c <= d) && (d <= b) -> (d - c) //CD входит в AB
-            (c <= a) && (a <= b) && (b <= d) -> (b - a) //AB входит в CD
+            c in a..b && b in c..d  -> b - c //AB пересекает CD
+            a in c..d && d in a..b -> d - a //CD пересекает AB
+            c in a..d && d in c..b -> d - c //CD входит в AB
+            a in c..b && b in a..d -> b - a //AB входит в CD
             else -> -1
         }

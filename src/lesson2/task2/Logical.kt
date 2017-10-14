@@ -30,7 +30,7 @@ fun isNumberHappy(number: Int): Boolean =
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
-        (x1 == x2) || (y1 == y2) || ((StrictMath.abs(x2 - x1) == (StrictMath.abs(y2 - y1))))
+        x1 == x2 || y1 == y2 || Math.abs(x2 - x1) == Math.abs(y2 - y1)
 
 /**
  * Средняя
@@ -54,8 +54,8 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
  when {
-    ((a <= r) && (b <= s)) || ((b <= r) && (a <= s)) -> true
-     ((a <= r) && (c <= s)) || ((c <= r) && (a <= s)) -> true
-     ((c <= r) && (b <= s)) || ((b <= r) && (c <= s)) -> true
+    maxOf(a,b) <= maxOf(r,s) && minOf(a,b) <= minOf(r,s) -> true
+     maxOf(a,c) <= maxOf(r,s) && minOf(a,c) <= minOf(r,s) -> true
+     maxOf(b,c)<=maxOf(r,s) && minOf(b,c) <= minOf(r,s) -> true
      else -> false
 }
