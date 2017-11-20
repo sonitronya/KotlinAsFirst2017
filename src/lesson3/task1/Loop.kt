@@ -80,12 +80,12 @@ fun fib(n: Int): Int {
     var a = 1
     var b = 1
     var c = 1
-    if (n < 3) return 1 else
-        for (i in 3..n) {
-            c = a + b
-            a = b
-            b = c
-        }
+    if (n < 3) 1
+    for (i in 3..n) {
+        c = a + b
+        a = b
+        b = c
+    }
     return c
 }
 
@@ -198,13 +198,7 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    var n1 = n
-    var number = 0
-    while (n1 > 0) {
-        number = number * 10 + n1 % 10
-        n1 /= 10
-    }
-    return (n == number)
+    return (revert(n) == n)
 }
 
 /**
