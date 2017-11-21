@@ -214,7 +214,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var number = n
     val list = mutableListOf<Int>()
-    if (number==0) listOf(0)
+    if (number==0) return listOf(0)
     while (number > 0) {
         val del = number / base
         val remain = number - del * base
@@ -236,7 +236,7 @@ fun convertToString(n: Int, base: Int): String {
     var result = ""
     var letter = ""
     var number = n
-    if (number==0) listOf(0)
+    if (number==0)  result +='0'
     while (number > 0) {
         val del = number / base
         var remain = number - del * base
