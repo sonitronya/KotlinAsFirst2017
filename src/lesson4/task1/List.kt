@@ -214,6 +214,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var number = n
     val list = mutableListOf<Int>()
+    if (number==0) listOf(0)
     while (number > 0) {
         val del = number / base
         val remain = number - del * base
@@ -235,6 +236,7 @@ fun convertToString(n: Int, base: Int): String {
     var result = ""
     var letter = ""
     var number = n
+    if (number==0) listOf(0)
     while (number > 0) {
         val del = number / base
         var remain = number - del * base
@@ -305,7 +307,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
 fun decimalFromString(str: String, base: Int): Int {
     val size = str.length
     var result = 0.0
-    var mul = 0
+    var mul: Int
     for (i in str.length - 1 downTo 0) {
         val ext = abs(i + 1.0 - size + 0.0)
         when {
