@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson5.task1
 
 /**
@@ -48,12 +49,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -71,7 +70,7 @@ fun dateStrToDigit(str: String): String {
     val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     try {
         val monthNumber = list.indexOf(parts[1]) + 1
-        if (parts[0].toInt() in 1..31 && monthNumber in 1..12 && parts[2].toInt() > 0) {
+        if (parts[0].toInt() in 1..31 && monthNumber in 1..12 && parts[2].toInt() >= 0) {
             return String.format("%02d.%02d.%d", parts[0].toInt(), monthNumber, parts[2].toInt())
         }
     } catch (e: Exception) {
@@ -79,6 +78,7 @@ fun dateStrToDigit(str: String): String {
     }
     return ""
 }
+
 /**
  * Средняя
  *
@@ -86,19 +86,21 @@ fun dateStrToDigit(str: String): String {
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String{
-    val parts = digital.split(" ")
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
     val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    if (parts.size != 3) return ""
     try {
-        val monthNumber = (list.indexOf(parts[1]) - 1).toString()
-        if (parts[0].toInt() in 1..31 && parts[2].toInt() > 0) {
-            return String.format("%02d.%02d.%d", parts[0], monthNumber, parts[2])
+        if (parts[0].toInt() in 1..31 && parts[2].toInt() >= 0) {
+            val monthNumber = list[parts[1].toInt() - 1]
+            return String.format("%d %s %d", parts[0].toInt(), monthNumber, parts[2].toInt())
         }
     } catch (e: Exception) {
         return ""
     }
     return ""
 }
+
 
 /**
  * Средняя

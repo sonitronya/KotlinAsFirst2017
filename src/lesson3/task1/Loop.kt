@@ -226,9 +226,9 @@ fun squareSequenceDigit(n: Int): Int {
     var count = 0
     while (length < n) {
         count++
-        length += digitNumber(count*count)
+        length += digitNumber(count * count)
     }
-    var a = count*count
+    var a = count * count
     while (length != n) {
         a /= 10
         length--
