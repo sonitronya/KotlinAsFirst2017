@@ -66,8 +66,19 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
-
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    try {
+        val monthNumber = list.indexOf(parts[1]) + 1
+        if (parts[0].toInt() in 1..31 && monthNumber in 1..12 && parts[2].toInt() > 0) {
+            return String.format("%02d.%02d.%d", parts[0].toInt(), monthNumber, parts[2].toInt())
+        }
+    } catch (e: Exception) {
+        return ""
+    }
+    return ""
+}
 /**
  * Средняя
  *
@@ -75,7 +86,19 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String{
+    val parts = digital.split(" ")
+    val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+    try {
+        val monthNumber = (list.indexOf(parts[1]) - 1).toString()
+        if (parts[0].toInt() in 1..31 && parts[2].toInt() > 0) {
+            return String.format("%02d.%02d.%d", parts[0], monthNumber, parts[2])
+        }
+    } catch (e: Exception) {
+        return ""
+    }
+    return ""
+}
 
 /**
  * Средняя

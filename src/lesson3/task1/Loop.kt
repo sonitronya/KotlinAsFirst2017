@@ -198,7 +198,7 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    return (revert(n) == n)
+    return revert(n) == n
 }
 
 /**
@@ -226,14 +226,14 @@ fun squareSequenceDigit(n: Int): Int {
     var count = 0
     while (length < n) {
         count++
-        length += digitNumber(sqr(count.toDouble()).toInt())
+        length += digitNumber(count*count)
     }
-    var a = sqr(count.toDouble())
+    var a = count*count
     while (length != n) {
         a /= 10
         length--
     }
-    return (a % 10).toInt()
+    return a % 10
 }
 
 /**

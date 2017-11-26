@@ -127,9 +127,9 @@ fun mean(list: List<Double>): Double = TODO()
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val sred = list.sum() / list.size
+    val mid = list.sum() / list.size
     for (i in 0 until list.size)
-        list[i] -= sred
+        list[i] -= mid
     return list
 }
 
@@ -140,13 +140,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
-fun times(a: List<Double>, b: List<Double>): Double {
-    var c = 0.0
-    for (i in 0 until a.size) {
-        c += a[i] * b[i]
-    }
-    return c
-}
+fun times(a: List<Double>, b: List<Double>): Double = a.zip(b, { a, b -> a * b }).sum()
 
 /**
  * Средняя
@@ -158,8 +152,10 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var element = 0.0
-    for (i in 0 until p.size) {
-        element += (p[i] * pow(x, i + 0.0))
+    var base = 1.0
+    for (i in p) {
+        element += i * base
+        base *= x
     }
     return element
 }
@@ -191,8 +187,11 @@ fun factorize(n: Int): List<Int> {
         if (number % mult == 0) {
             list += mult
             number /= mult
-        } else mult++
+        } else {
+            mult++
+        }
     }
+
     return list
 }
 
@@ -214,10 +213,9 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var number = n
     val list = mutableListOf<Int>()
-    if (number==0) return listOf(0)
+    if (number == 0) return listOf(0)
     while (number > 0) {
-        val del = number / base
-        val remain = number - del * base
+        val remain = number % base
         list.add(0, remain)
         number /= base
     }
@@ -234,43 +232,17 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     var result = ""
-    var letter = ""
+    var letter: String
     var number = n
-    if (number==0)  result +='0'
+    if (number == 0) result += '0'
     while (number > 0) {
-        val del = number / base
-        var remain = number - del * base
-        when {
-            (remain == 10) -> letter = 'a'.toString()
-            (remain == 11) -> letter = 'b'.toString()
-            (remain == 12) -> letter = 'c'.toString()
-            (remain == 13) -> letter = 'd'.toString()
-            (remain == 14) -> letter = 'e'.toString()
-            (remain == 15) -> letter = 'f'.toString()
-            (remain == 16) -> letter = 'g'.toString()
-            (remain == 17) -> letter = 'h'.toString()
-            (remain == 18) -> letter = 'i'.toString()
-            (remain == 19) -> letter = 'j'.toString()
-            (remain == 20) -> letter = 'k'.toString()
-            (remain == 21) -> letter = 'l'.toString()
-            (remain == 22) -> letter = 'm'.toString()
-            (remain == 23) -> letter = 'n'.toString()
-            (remain == 24) -> letter = 'o'.toString()
-            (remain == 25) -> letter = 'p'.toString()
-            (remain == 26) -> letter = 'q'.toString()
-            (remain == 27) -> letter = 'r'.toString()
-            (remain == 28) -> letter = 's'.toString()
-            (remain == 29) -> letter = 't'.toString()
-            (remain == 30) -> letter = 'u'.toString()
-            (remain == 31) -> letter = 'v'.toString()
-            (remain == 32) -> letter = 'w'.toString()
-            (remain == 33) -> letter = 'x'.toString()
-            (remain == 34) -> letter = 'y'.toString()
-            (remain == 35) -> letter = 'z'.toString()
-        }
-        if (remain >= 10)
+        var remain = number % base
+        if (remain >= 10) {
+            letter = (('a' + remain - 10).toString())
             result += letter
-        else result += remain.toString()
+        } else {
+            result += remain.toString()
+        }
         number /= base
     }
     return result.reversed()
@@ -287,10 +259,11 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     val size = digits.size
     var result = 0.0
-    for (i in 0 until size) {
-        val ext = abs(i + 1.0 - size + 0.0)
-        var number = digits[i] * pow(base + 0.0, ext)
+    var x = 0.0
+    for (i in size - 1 downTo 0) {
+        var number = digits[i] * pow(base + 0.0, x)
         result += number
+        x++
     }
     return result.toInt()
 }
@@ -305,42 +278,18 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    val size = str.length
     var result = 0.0
     var mul: Int
+    var x = 0.0
     for (i in str.length - 1 downTo 0) {
-        val ext = abs(i + 1.0 - size + 0.0)
-        when {
-            (str[i] == 'a') -> mul = 10
-            (str[i] == 'b') -> mul = 11
-            (str[i] == 'c') -> mul = 12
-            (str[i] == 'd') -> mul = 13
-            (str[i] == 'e') -> mul = 14
-            (str[i] == 'f') -> mul = 15
-            (str[i] == 'g') -> mul = 16
-            (str[i] == 'h') -> mul = 17
-            (str[i] == 'i') -> mul = 18
-            (str[i] == 'j') -> mul = 19
-            (str[i] == 'k') -> mul = 20
-            (str[i] == 'l') -> mul = 21
-            (str[i] == 'm') -> mul = 22
-            (str[i] == 'n') -> mul = 23
-            (str[i] == 'o') -> mul = 24
-            (str[i] == 'p') -> mul = 25
-            (str[i] == 'q') -> mul = 26
-            (str[i] == 'r') -> mul = 27
-            (str[i] == 's') -> mul = 28
-            (str[i] == 't') -> mul = 29
-            (str[i] == 'u') -> mul = 30
-            (str[i] == 'v') -> mul = 31
-            (str[i] == 'w') -> mul = 32
-            (str[i] == 'x') -> mul = 33
-            (str[i] == 'y') -> mul = 34
-            (str[i] == 'z') -> mul = 35
-            else -> mul = str[i] - '0'
+        if (str[i] > 'a') {
+            mul = str[i] - 'a' + 10
+        } else {
+            mul = str[i] - '0'
         }
-        var number = mul * pow(base + 0.0, ext)
+        var number = mul * pow(base + 0.0, x)
         result += number
+        x++
     }
     return result.toInt()
 }
