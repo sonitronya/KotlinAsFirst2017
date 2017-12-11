@@ -65,9 +65,10 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
+val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     try {
         val monthNumber = list.indexOf(parts[1]) + 1
         if (parts[0].toInt() in 1..31 && monthNumber in 1..12 && parts[2].toInt() >= 0) {
@@ -88,7 +89,6 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    val list = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
     if (parts.size != 3) return ""
     try {
         if (parts[0].toInt() in 1..31 && parts[2].toInt() >= 0) {
@@ -138,7 +138,11 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val best = Regex("""\d+(?= [%+-]*\+)""").findAll(jumps)
+    return best.toList().map { it.value.toInt() }.max() ?: -1
+
+}
 
 /**
  * Сложная
@@ -149,7 +153,21 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var part = expression.split(" ")
+    try {
+        var result = part[0].toInt()
+        for (i in 1 until part.size step 2) {
+            when {
+                part[i] == "-" -> result -= part[i + 1].toInt()
+                part[i] == "+" -> result += part[i + 1].toInt()
+            }
+        }
+        return result
+    } catch (e: Exception) {
+        throw IllegalArgumentException()
+    }
+}
 
 /**
  * Сложная

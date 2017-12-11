@@ -232,16 +232,15 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     var result = ""
-    var letter: String
     var number = n
-    if (number == 0) result += '0'
+    if (number == 0) ""
     while (number > 0) {
         var remain = number % base
         if (remain >= 10) {
-            letter = (('a' + remain - 10).toString())
+            var letter = (('a' + remain - 10))
             result += letter
         } else {
-            result += remain.toString()
+            result += remain
         }
         number /= base
     }
@@ -261,9 +260,11 @@ fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0.0
     var x = 0.0
     for (i in size - 1 downTo 0) {
-        var number = digits[i] * pow(base + 0.0, x)
+        var mul = pow(base + 0.0, x)
+        var number = digits[i] * mul
         result += number
         x++
+        mul *= base
     }
     return result.toInt()
 }
@@ -279,10 +280,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun decimalFromString(str: String, base: Int): Int {
     var result = 0.0
-    var mul: Int
     var x = 0.0
     for (i in str.length - 1 downTo 0) {
-        if (str[i] > 'a') {
+        var mul: Int
+        if (str[i] >= 'a') {
             mul = str[i] - 'a' + 10
         } else {
             mul = str[i] - '0'
