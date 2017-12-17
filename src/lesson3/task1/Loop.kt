@@ -214,6 +214,23 @@ fun hasDifferentDigits(n: Int): Boolean =
             else -> true
         }
 
+fun sequenceDigit(n: Int, b: (Int) -> Int): Int {
+    var length = 0
+    var count = 0
+    while (length < n) {
+        count++
+        length += digitNumber(b(count))
+    }
+    var a = b(count)
+    while (length != n) {
+        a /= 10
+        length--
+    }
+    return a % 10
+
+
+}
+
 /**
  * Сложная
  *
@@ -221,20 +238,7 @@ fun hasDifferentDigits(n: Int): Boolean =
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int {
-    var length = 0
-    var count = 0
-    while (length < n) {
-        count++
-        length += digitNumber(count * count)
-    }
-    var a = count * count
-    while (length != n) {
-        a /= 10
-        length--
-    }
-    return a % 10
-}
+fun squareSequenceDigit(n: Int): Int = sequenceDigit(n, { b -> b * b })
 
 /**
  * Сложная
@@ -243,17 +247,4 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int {
-    var length = 0
-    var count = 0
-    while (length < n) {
-        count++
-        length += digitNumber(fib(count))
-    }
-    var a = fib(count)
-    while (length != n) {
-        a /= 10
-        length--
-    }
-    return a % 10
-}
+fun fibSequenceDigit(n: Int): Int = sequenceDigit(n, { b -> fib(b) })

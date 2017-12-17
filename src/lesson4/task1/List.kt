@@ -231,20 +231,19 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
-    var result = ""
     var number = n
+    val list = mutableListOf<String>()
     if (number == 0) ""
     while (number > 0) {
-        var remain = number % base
+        val remain = number % base
         if (remain >= 10) {
-            var letter = (('a' + remain - 10))
-            result += letter
+            list.add(0, ('a' + remain - 10).toString())
         } else {
-            result += remain
+            list.add(0, remain.toString())
         }
         number /= base
     }
-    return result.reversed()
+    return list.joinToString(separator = "")
 }
 
 
@@ -257,16 +256,13 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     val size = digits.size
-    var result = 0.0
-    var x = 0.0
+    var result = 0
+    var newBase = 1
     for (i in size - 1 downTo 0) {
-        var mul = pow(base + 0.0, x)
-        var number = digits[i] * mul
-        result += number
-        x++
-        mul *= base
+        result+= digits[i] * newBase
+        newBase*=base
     }
-    return result.toInt()
+    return result
 }
 
 /**
@@ -279,20 +275,18 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var result = 0.0
-    var x = 0.0
+    var result = 0
+    var newBase = 1
     for (i in str.length - 1 downTo 0) {
-        var mul: Int
-        if (str[i] >= 'a') {
-            mul = str[i] - 'a' + 10
+        val mul = if (str[i] >= 'a') {
+            str[i] - 'a' + 10
         } else {
-            mul = str[i] - '0'
+            str[i] - '0'
         }
-        var number = mul * pow(base + 0.0, x)
-        result += number
-        x++
+        result+= mul * newBase
+        newBase*=base
     }
-    return result.toInt()
+    return result
 }
 
 
