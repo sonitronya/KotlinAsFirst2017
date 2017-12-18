@@ -175,8 +175,8 @@ fun lineByPoints(a: Point, b: Point): Line {
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
-    var half = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
-    var angl = lineByPoints(a, b).angle
+    val half = Point((a.x + b.x) / 2, (a.y + b.y) / 2)
+    val angl = lineByPoints(a, b).angle
     if (angl < PI / 2) return Line(half, angl + PI / 2)
     else return Line(half, angl - PI / 2)
 }
@@ -198,7 +198,11 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
  * (построить окружность по трём точкам, или
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
-fun circleByThreePoints(a: Point, b: Point, c: Point): Circle = Circle(bisectorByPoints(a, b).crossPoint(bisectorByPoints(b, c)),bisectorByPoints(a, b).crossPoint(bisectorByPoints(b, c)).distance(a))
+fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
+    val cent = bisectorByPoints(a, b).crossPoint(bisectorByPoints(b, c))
+    var rad = cent.distance(a)
+    return Circle(cent, rad)
+}
 
 
 /**

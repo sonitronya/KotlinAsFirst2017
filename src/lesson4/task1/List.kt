@@ -233,7 +233,7 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     var number = n
     val list = mutableListOf<String>()
-    if (number == 0) ""
+    if (number == 0) "0"
     while (number > 0) {
         val remain = number % base
         if (remain >= 10) {
@@ -259,8 +259,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
     var newBase = 1
     for (i in size - 1 downTo 0) {
-        result+= digits[i] * newBase
-        newBase*=base
+        result += digits[i] * newBase
+        newBase *= base
     }
     return result
 }
@@ -283,8 +283,8 @@ fun decimalFromString(str: String, base: Int): Int {
         } else {
             str[i] - '0'
         }
-        result+= mul * newBase
-        newBase*=base
+        result += mul * newBase
+        newBase *= base
     }
     return result
 }
