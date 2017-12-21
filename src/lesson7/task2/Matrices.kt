@@ -78,6 +78,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  1  1  1  1  1
  */
 fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+
 /**
  * Сложная
  *
@@ -186,8 +187,8 @@ fun findHoles(matrix: Matrix<Int>): Holes {
             if (matrix[j, i] == 0)
                 num++
         }
-            if (num == height) column.add(i)
-            num = 0
+        if (num == height) column.add(i)
+        num = 0
     }
     return Holes(row, column)
 }
