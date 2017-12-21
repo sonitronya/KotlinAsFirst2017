@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson7.task2
 
+import lesson1.task1.numberRevert
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
 
@@ -76,7 +78,6 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  1  1  1  1  1
  */
 fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
-
 /**
  * Сложная
  *
@@ -103,7 +104,18 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.width < 1 || matrix.height < 1) return matrix
+    if (matrix.height != matrix.width) throw IllegalArgumentException()
+    val result = createMatrix(matrix.height, matrix.width, matrix[0, 0])
+    val amount = matrix.height
+    for (i in 0 until amount) {
+        for (j in 0 until amount) {
+            result[i, j] = matrix[amount - j - 1, i]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -154,7 +166,31 @@ fun sumNeighbours(matrix: Matrix<Int>): Matrix<Int> = TODO()
  * 0 0 1 0
  * 0 0 0 0
  */
-fun findHoles(matrix: Matrix<Int>): Holes = TODO()
+fun findHoles(matrix: Matrix<Int>): Holes {
+    val height = matrix.height
+    val width = matrix.width
+    var count = 0
+    var num = 0
+    val row = mutableListOf<Int>()
+    val column = mutableListOf<Int>()
+    for (i in 0 until height) {
+        for (j in 0 until width) {
+            if (matrix[i, j] == 0)
+                count++
+        }
+        if (count == width) row.add(i)
+        count = 0
+    }
+    for (i in 0 until width) {
+        for (j in 0 until height) {
+            if (matrix[j, i] == 0)
+                num++
+        }
+            if (num == height) column.add(i)
+            num = 0
+    }
+    return Holes(row, column)
+}
 
 /**
  * Класс для описания местонахождения "дырок" в матрице
