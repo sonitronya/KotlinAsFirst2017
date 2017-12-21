@@ -233,7 +233,7 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     var number = n
     val list = mutableListOf<String>()
-    if (number == 0)'0'
+    if (number == 0) list.add("0")
     while (number > 0) {
         val remain = number % base
         if (remain >= 10) {
